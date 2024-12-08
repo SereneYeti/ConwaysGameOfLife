@@ -20,7 +20,8 @@ struct GameOfLifeView: View {
             
             Spacer()
            
-            gridView
+            GridView(viewModel: viewModel)
+                .padding(.init(top: 20, leading: 12, bottom: 20, trailing: 12))
             
             Spacer()
             
@@ -48,39 +49,6 @@ struct GameOfLifeView: View {
         .overlay(alignment: .topTrailing) {
             trailingOverlay
         }
-    }
-    
-    @ViewBuilder private var gridView: some View {
-        ScrollView([.horizontal,.vertical]) {
-            Grid(alignment: .center, horizontalSpacing: 10, verticalSpacing: 10) {
-                
-                ForEach(viewModel.grid.indices, id: \.self) { row in
-                    GridRow {
-                        ForEach(viewModel.grid[row].indices, id: \.self) { column in
-                            if !viewModel.started {
-                                Button {
-                                    viewModel.grid[row][column].toggle()
-                                    if viewModel.grid[row][column] {
-                                        self.viewModel.population += 1
-                                    } else {
-                                        self.viewModel.population -= 1
-                                    }
-                                } label: {
-                                    viewModel.getCell(row: row, column: column) ? Color.black : Color.secondary.opacity(0.5)
-                                }
-                                .buttonStyle(.bordered)
-
-                            } else {
-                                viewModel.getCell(row: row, column: column) ? Color.black : Color.secondary.opacity(0.5)
-                            }
-                        }
-                    }
-                }
-                
-            }
-            .padding(.init(top: 20, leading: 12, bottom: 20, trailing: 12))
-        }
-        
     }
     
     @ViewBuilder private var topButton: some View {

@@ -24,8 +24,8 @@ import SwiftUI
 
 class GameOfLifeViewModel: GameOfLifeViewModelProtocol {
       
-    let MAPWIDTH: Int = 16
-    let MAPHEIGHT: Int = 16
+    let MAPWIDTH: Int = 100
+    let MAPHEIGHT: Int = 100
     let MOVEDELAY: Int = 1
     
     @Published var grid: GameOfLifeGrid
@@ -125,6 +125,15 @@ class GameOfLifeViewModel: GameOfLifeViewModelProtocol {
             self.grid.append([])
         }
         
+    }
+    
+    public func tapGridButton(row: Int, column: Int) {
+        grid[row][column].toggle()
+        if grid[row][column] {
+            self.population += 1
+        } else {
+            self.population -= 1
+        }
     }
     
     func play() async {
